@@ -3,6 +3,7 @@ const searchCity = $('#search-city');
 const searchCityButton = $('#search-city-button');
 const clearHistoryButton = $('#clear-history-button');
 
+
 const currentCity = $('#current-city');
 const currentTemp = $('#current-temp');
 const currentHumidity = $('#current-humidity');
@@ -29,18 +30,21 @@ showClear();
 // WHEN I search for a city
 // THEN I am presented with current and future conditions for that city and that city is added to the search history
 
-$(document).on('submit', function(){
-    Event.preventDefault();
-    let searchValue = searchCity.val().trim();
-    currentCondition(searchValue);
-    searchHistory(searchValue);
-    searchCity.val('');
-});
+// $(document).on('submit', function(){
+//     console.log('DOCUMENT SUBMIT!!!')
+//     Event.preventDefault();
+//     let searchValue = searchCity.val().trim();
+//     currentCondition(searchValue);
+//     searchHistoryList(searchValue);
+//     searchCity.val('');
+// });
 
 searchCityButton.on('click', function(Event){
+    console.log('submit button clicked!!')
     Event.preventDefault();
     let searchValue = searchCity.val().trim();
     currentCondition(searchValue);
+    searchHistoryList(searchValue);
     searchCity.val('');
 });
 
@@ -53,7 +57,7 @@ clearHistoryButton.on('click', function(){
 searchHistory.on('click', 'li.city-btn', function(){
     let value = $(this).data('value');
     currentCondition(value);
-    searchHistory(value);
+    searchHistoryList(value);
 });
 
 
@@ -109,7 +113,7 @@ function currentCondition(searchValue){
                 let forecastIcon = $('<img>');
                 let forecastTemp = $("<p class='card-text mb-0'>");
                 let forecastHumidity = $("<p class='card-text mb-0'>");
-                
+
                 $('#five-day-forecast').append(forecastColumn);
                 forecastColumn.append(forecastCard);
                 forecastCard.append(forecastCardBody);
@@ -136,21 +140,25 @@ function currentCondition(searchValue){
 // THEN I am again presented with current and future conditions for that city
 
 function searchHistoryList(){
+    console.log('Top of serachHistroy list')
     let searchValue = searchCity.val().trim();
     if (searchValue){
-        if (citiesList,indexOf(searchValue) === -1){
+        if (citiesList.indexOf(searchValue) === -1){
             citiesList.push(searchValue);
+            console.log('hit the if adding new city to citieslist and fireing of list array')
             listArray();
         } else {
             let removeIndex = citiesList.indexOf(searchValue);
             citiesList.splice(removeIndex, 1);
             citiesList.push(searchValue);
+            console.log('hit the else')
             listArray();  
         }
     }
 }
 
 function listArray() {
+    console.log('TOP OF LIST ARRAY')
     searchHistory.empty();
     citiesList.forEach(function(city) {
         let searchHistoryItem = $("<li class='list-group-item city-btn'>");
@@ -158,6 +166,7 @@ function listArray() {
         searchHistoryItem.text(city);
         searchHistory.prepend(searchHistoryItem);
     });
+    console.log('About to save this to local stroage', citiesList)
     localStorage.setItem('cities', JSON.stringify(citiesList));
 }
 
