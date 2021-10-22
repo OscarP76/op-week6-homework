@@ -10,3 +10,5 @@ The text area input saves to local storage.
 ![]()
 
 ## Code Snippet 
+(![weather-javascript-snip](https://user-images.githubusercontent.com/88392799/138509125-35409cc3-c971-46dc-b4ca-a35c1053a672.PNG)
+)
