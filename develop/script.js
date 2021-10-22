@@ -14,13 +14,13 @@ const weatherData = $('#weather-data');
 
 const ApiKey = '01fd5d8189ab77f3ab67722bb586d264';
 
-const citiesList = [];
+let citiesList = [];
 
 const currentDate = moment().format('L');
 $('#current-date').text('(' + currentDate + ')');
 
 
-initializeHistory();
+storeHistory();
 showClear();
 
 
@@ -29,15 +29,6 @@ showClear();
 // GIVEN a weather dashboard with form inputs
 // WHEN I search for a city
 // THEN I am presented with current and future conditions for that city and that city is added to the search history
-
-// $(document).on('submit', function(){
-//     console.log('DOCUMENT SUBMIT!!!')
-//     Event.preventDefault();
-//     let searchValue = searchCity.val().trim();
-//     currentCondition(searchValue);
-//     searchHistoryList(searchValue);
-//     searchCity.val('');
-// });
 
 searchCityButton.on('click', function(Event){
     console.log('submit button clicked!!')
@@ -170,14 +161,13 @@ function listArray() {
     localStorage.setItem('cities', JSON.stringify(citiesList));
 }
 
-function initializeHistory() {
+function storeHistory() {
     if (localStorage.getItem("cities")) {
         citiesList = JSON.parse(localStorage.getItem("cities"));
         var lastIndex = citiesList.length - 1;
         listArray();
         if (citiesList.length !== 0) {
             currentCondition(citiesList[lastIndex]);
-            weatherContent.removeClass("hide");
         }
     }
 }
